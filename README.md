@@ -1,68 +1,51 @@
-# 🏆 ScrimLab - League of Legends Scrim & Arena Bot
+# 🏆 ScrimLab - League of Legends In-House Bot
 
-ScrimLab, League of Legends toplulukları için geliştirilmiş; scrim (takım antrenmanı), 1v1 Arena ve gelişmiş takım yönetim sistemine sahip profesyonel bir Discord botudur.
-
----
-
-## ✨ Özellikler
-
-- **🛡️ Kalıcı Yazar İmzası:** Botun geliştiricisi **IHLAMUR** olarak sisteme işlenmiştir ve güvenlik korumalıdır.
-- **🎮 LoL Odaklı Yapı:** Gereksiz tüm oyunlardan arındırılmış, sadece League of Legends için optimize edilmiştir.
-- **⚔️ 1v1 Arena:** Otomatik oda ismi ve şifre oluşturma sistemi ile hızlı rekabet.
-- **🥇 Takım Sistemi:** Kendi takımınızı kurun, kaptanlık yapın ve istatistiklerinizi takip edin.
-- **🔄 Otomatik Güncelleyici:** Bot her başladığında GitHub (IHLAMUR123/ScrimLab) üzerinden sürüm kontrolü yapar.
-- **📊 Gelişmiş Veritabanı:** MMR sistemi ve maç geçmişi kayıtları.
+ScrimLab, League of Legends toplulukları için geliştirilmiş; scrim otomasyonu, ekonomi sistemi ve gelişmiş takım yönetim sistemine sahip profesyonel bir Discord botudur.
 
 ---
 
-## 🛠️ Kurulum Rehberi (Adım Adım)
+## ✨ Özellikler & Komutlar
 
-Botu sorunsuz bir şekilde ayağa kaldırmak için aşağıdaki adımları takip edin:
+### 🎮 Oyun & Scrim Otomasyonu
+- **⚔️ 5v5 Otomasyonu:** Otomatik lobi ismi, şifre ve **Draft** linkleri oluşturma.
+- **�️ Otomatik Taşıma:** Maç başladığında oyuncuları kendi takım ses kanallarına otomatik aktarma.
+- **📊 OP.GG Entegrasyonu:** Her iki takımın OP.GG linklerini otomatik olarak paylaşma.
+- **🥇 Takım Sistemi:** Kendi takımınızı kurun ve istatistiklerinizi takip edin.
 
-### 1. Dosyaları İndirin
-```bash
-git clone https://github.com/IHLAMUR123/ScrimLab.git
-cd ScrimLab
-```
+### � Ekonomi & Market
+- **🎲 /duello:** Diğer oyuncularla bakiye karşılığında zar atma yarışı.
+- **🛒 /market:** Kazandığınız bakiyelerle özel roller alma veya oluşturma.
+- **👛 /cüzdan:** Mevcut bakiyenizi anlık görüntüleme.
 
-### 2. Sanal Ortam Oluşturun (Önerilir)
-```bash
-python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-# veya
-venv\Scripts\activate     # Windows
-```
+### 👤 Sosyal & Profil
+- **�️ /profile:** Kendinizin veya rakiplerinizin tüm istatistiklerini görüntüleme.
+- **📢 /report:** Şikayetlerinizi kanıtlarıyla birlikte anonim olarak iletme.
+- **�️ /oylama:** Sunucu gelişimine oy vererek katkıda bulunma.
 
-### 3. Gerekli Kütüphaneleri Kurun
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Ayarları Yapılandırın (.env)
-Ana dizinde bir `.env` dosyası oluşturun ve içine şunları yapıştırın:
-```env
-TOKEN=Discord_Bot_Tokeniniz
-TOP_GG_TOKEN=Opsiyonel_TopGG_Tokeniniz
-GUILD_ID=Ana_Sunucu_IDniz
-```
-
-### 5. Botu Başlatın
-```bash
-python3 main.py
-```
+### 🛡️ Güvenlik & Sistem
+- **💎 Kalıcı İmza:** Geliştirici **IHLAMUR** imzası sistemde korumalıdır.
+- **🔄 Güncelleyici:** Bot her başladığında GitHub üzerinden sürüm kontrolü yapar.
 
 ---
 
-## 🚀 Önemli Notlar
+## 🛠️ Kurulum Rehberi
 
-- **Erişim Sorunu:** Eğer Türkiye'den çalıştırıyorsanız, Discord erişim engeli nedeniyle botun bağlanma sorunu (Timeout) yaşamaması için **VPN** veya **Yurt dışı lokasyonlu bir VDS** kullanmanız önerilir.
-- **Güvenlik:** `core/` dizini altındaki dosyalar botun bütünlük kontrolünü sağlar. Bu dosyaların (özellikle `__credits__.py`) değiştirilmesi botun hata verip kapanmasına neden olur.
+1. **Dosyaları İndirin:** `git clone https://github.com/IHLAMUR123/ScrimLab.git`
+2. **Kütüphaneleri Kurun:** `pip install -r requirements.txt`
+3. **Yapılandırma:** `.env` dosyasına `TOKEN`, `GUILD_ID` ve `TOP_GG_TOKEN` bilgilerinizi ekleyin.
+4. **Çalıştır:** `python3 main.py`
+
+---
+
+## 💡 Önemli Notlar
+- **Erişim:** Türkiye'den kullanımda Discord erişim engeli kaynaklı sorun yaşamamak için VPN veya yurt dışı lokasyonlu VDS önerilir.
+- **Bütünlük:** `core/` dizinindeki dosyaların (özellikle `__credits__.py`) değiştirilmesi botun çalışmasını durdurur.
 
 ---
 
 ## 👨‍💻 Geliştirici
-**IHLAMUR** tarafından özel olarak hazırlanmıştır.
-GitHub: [IHLAMUR123](https://github.com/IHLAMUR123)
+- **Author:** [IHLAMUR123](https://github.com/IHLAMUR123)
+- **Original Repo:** [CarlSimmy](https://github.com/CarlSimmy/InhouseLeague)
 
 ---
-*İyi Scrim'ler!* 🎮✨
+*İyi Scrim'ler!* 🎮
