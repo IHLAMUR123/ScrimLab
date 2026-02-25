@@ -1,10 +1,10 @@
 # 🏆 ScrimLab - League of Legends In-House Bot
 
-ScrimLab, League of Legends toplulukları için geliştirilmiş; scrim otomasyonu, ekonomi sistemi ve gelişmiş takım yönetim sistemine sahip profesyonel bir Discord botudur.
+ScrimLab, League of Legends toplulukları için geliştirilmiş; scrim otomasyonu, ekonomi sistemi ve gelişmiş takım yönetim sistemine sahip profesyonel bir Discord botudur. 100% Açık Kaynaklıdır.
 
 ---
 
-## ✨ Özellikler & Komutlar
+## Özellikler & Komutlar
 
 ### 🎮 Oyun & Scrim Otomasyonu
 - **⚔️ 5v5 Otomasyonu:** Otomatik lobi ismi, şifre ve **Draft** linkleri oluşturma.
@@ -18,13 +18,13 @@ ScrimLab, League of Legends toplulukları için geliştirilmiş; scrim otomasyon
 - **👛 /cüzdan:** Mevcut bakiyenizi anlık görüntüleme.
 
 ### 👤 Sosyal & Profil
-- **�️ /profile:** Kendinizin veya rakiplerinizin tüm istatistiklerini görüntüleme.
+- **�️ /profil:** Kendinizin veya rakiplerinizin tüm istatistiklerini görüntüleme.
 - **📢 /report:** Şikayetlerinizi kanıtlarıyla birlikte anonim olarak iletme.
-- **�️ /oylama:** Sunucu gelişimine oy vererek katkıda bulunma.
 
 ### 🛡️ Güvenlik & Sistem
-- **💎 Kalıcı İmza:** Geliştirici **IHLAMUR** imzası sistemde korumalıdır.
-- **🔄 Güncelleyici:** Bot her başladığında GitHub üzerinden sürüm kontrolü yapar.
+- **🔄 Update Checker:** Bot her başladığında GitHub üzerinden sürüm kontrolü yapar.
+
+Ve Dahası...
 
 ---
 
