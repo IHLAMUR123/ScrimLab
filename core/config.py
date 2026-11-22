@@ -12,6 +12,13 @@ from __future__ import annotations
 
 import os
 
+try:  # optional at import time so the pure-config tests need no dependencies
+    from dotenv import load_dotenv
+except ImportError:
+    pass
+else:
+    load_dotenv()
+
 
 def _int(name: str, default: int) -> int:
     raw = os.getenv(name)
@@ -59,9 +66,6 @@ ERROR_LOG_CHANNEL_ID = _int("ERROR_LOG_CHANNEL_ID", 1452690176760479755)
 WARNING_ROLE_ID = _int("WARNING_ROLE_ID", 0)
 NEW_MEMBER_ROLE_ID = _int("NEW_MEMBER_ROLE_ID", 1453407218442702941)
 MEMBER_ROLE_ID = _int("MEMBER_ROLE_ID", 1453335299840020511)
-
-# --- testing ---------------------------------------------------------------
-TEST_BOT_ID = _int("TEST_BOT_ID", 1452380258933149958)
 
 # --- emojis ----------------------------------------------------------------
 def _emoji(name: str, default: str) -> str:

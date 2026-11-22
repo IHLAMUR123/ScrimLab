@@ -41,6 +41,21 @@ Python + [disnake](https://disnake.dev/) + SQLite.
 
 ## Kurulum
 
+### Windows — tek tık
+
+`build.bat` dosyasına çift tıklayın. Python 3.12+ kuruluysa sırasıyla:
+
+1. `.venv` sanal ortamını oluşturur,
+2. `requirements.txt` bağımlılıklarını kurar,
+3. `.env` yoksa `.env.example`'dan üretir; `TOKEN` boşsa Notepad açar,
+4. `db/` klasörünü hazırlar,
+5. sözdizimi kontrolü ve testleri çalıştırır.
+
+Kurulum bitince **`start.bat`** ile botu başlatın. Komut satırından kurulumu test
+etmek ve hemen başlatmak için: `build.bat /run`.
+
+### Elle kurulum
+
 ```bash
 git clone https://github.com/IHLAMUR123/ScrimLab.git
 cd ScrimLab

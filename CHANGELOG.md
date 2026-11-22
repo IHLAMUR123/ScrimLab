@@ -8,6 +8,7 @@ Yayın temizliği. Davranış aynı, yapılandırma dışarı taşındı.
 - `core/config.py`: tüm guild / kanal / rol / emoji ID'leri ortam değişkeninden okunur.
 - `LICENSE` (MIT), `version.txt`, `Dockerfile`, `docker-compose.yml`, `.env.example`.
 - `tests/test_config.py` ve GitHub Actions CI (compile + pytest).
+- `build.bat` (tek tık kurulum) ve `start.bat` (başlatma).
 - README: kurulum, Docker, yapılandırma tablosu, lisans ve krediler.
 
 ### Değişti
@@ -24,3 +25,7 @@ Yayın temizliği. Davranış aynı, yapılandırma dışarı taşındı.
 ### Notlar
 - `WARNING_ROLE_ID` varsayılanı `0` (devre dışı). Eski kod buraya yanlışlıkla bir kanal ID'si yazıyordu.
 - Emoji ID'leri sizin sunucunuza ait değilse `.env` üzerinden değiştirin ya da unicode kullanın.
+- Python 3.15 uyumluluğu: `aiohttp>=3.14.5`, `pillow>=13`, `audioop-lts` (3.13+) ve
+  disnake 2.7 için event-loop shim'i. `topggpy` kaldırıldı; top.gg gönderimi artık
+  doğrudan HTTP ile yapılıyor (discord.py bağımlılığı tamamen kalktı).
+- `build.bat` uçtan uca test edildi: venv → bağımlılıklar → config → derleme → testler.

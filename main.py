@@ -6,8 +6,7 @@ import aiosqlite
 import aiohttp
 from colorama import Fore, Style, init
 from disnake import Intents
-from disnake.ext import commands
-from dotenv import load_dotenv
+from disnake.ext import commands, tasks
 
 from core import config
 from core.__credits__ import get_credits_banner, __version__
@@ -15,7 +14,12 @@ from core.__credits__ import get_credits_banner, __version__
 # Initialize colorama
 init(autoreset=True)
 
-load_dotenv()
+# disnake 2.7 calls asyncio.get_event_loop() inside Client.__init__.
+# On Python 3.14+ that raises when no loop is set, so create one explicitly.
+try:
+    asyncio.get_event_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
 TOKEN = config.TOKEN
 DB_PATH = os.getenv("DB_PATH", "db/main.sqlite")
@@ -110,22 +114,47 @@ bot = MyBot(
 )
 bot.remove_command("help")
 
-if config.TOP_GG_TOKEN:
-    import topgg
+async def post_topgg_stats():
+    """Post the guild count to top.gg.
 
-    bot.topggpy = topgg.DBLClient(bot, config.TOP_GG_TOKEN, autopost=True)
+    Implemented with a plain HTTP request so the bot does not need topggpy,
+    which would pull in discord.py alongside disnake.
+    """
+    if not config.TOP_GG_TOKEN or bot.user is None:
+        return
+    payload = {"server_count": len(bot.guilds)}
+    if bot.shard_count:
+        payload["shard_count"] = bot.shard_count
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                f"https://top.gg/api/bots/{bot.user.id}/stats",
+                json=payload,
+                headers={"Authorization": config.TOP_GG_TOKEN},
+                timeout=10,
+            ) as response:
+                if response.status == 200:
+                    print(f"[top.gg] Sunucu sayısı gönderildi: {payload['server_count']}")
+                else:
+                    print(f"[top.gg] Gönderim başarısız: HTTP {response.status}")
+    except Exception as exc:
+        print(f"[top.gg] Gönderim hatası: {exc}")
 
-    @bot.event
-    async def on_autopost_success():
-        print(
-            f"Posted server count ({bot.topggpy.guild_count}), "
-            f"shard count ({bot.shard_count})"
-        )
+
+@tasks.loop(minutes=30)
+async def topgg_loop():
+    await post_topgg_stats()
+
+
+@topgg_loop.before_loop
+async def before_topgg_loop():
+    await bot.wait_until_ready()
 
 
 # Load all cogs
-for filename in sorted(os.listdir(os.path.join(os.path.dirname(__file__), "cogs"))):
-    if filename.endswith(".py"):
+cogs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cogs")
+for filename in sorted(os.listdir(cogs_dir)):
+    if filename.endswith(".py") and not filename.startswith("__"):
         bot.load_extension(f"cogs.{filename[:-3]}")
 
 
@@ -136,6 +165,9 @@ async def on_ready():
 
     # Update check runs once per startup; failures are non-fatal.
     bot.loop.create_task(check_for_updates())
+
+    if config.TOP_GG_TOKEN and not topgg_loop.is_running():
+        topgg_loop.start()
 
     # Base tables. Cogs create their own on load.
     await bot.execute(
