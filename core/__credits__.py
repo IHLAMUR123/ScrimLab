@@ -5,7 +5,7 @@ been removed: ScrimLab is MIT-licensed and forks must be free to change it.
 """
 
 __author__ = "IHLAMUR"
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 
 def get_credits_banner() -> str:

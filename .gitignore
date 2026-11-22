@@ -4,5 +4,6 @@ __pycache__/
 *.pyc
 .env
 db/
+backups/
 *.sqlite
 *.log

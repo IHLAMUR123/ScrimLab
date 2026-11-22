@@ -7,6 +7,10 @@ Python + [disnake](https://disnake.dev/) + SQLite.
 > geliştirilmiyor. Referans uygulama olarak MIT lisansıyla yayınlanmıştır: kendi sunucunuzda
 > çalıştırabilir, fork'layabilir ve değiştirebilirsiniz.
 
+<p align="center">
+  <img src="assets/flow.svg" alt="ScrimLab 5v5 akışı: kuyruk, takımlar, ses, maç, sonuç" width="100%">
+</p>
+
 ---
 
 ## Özellikler
@@ -53,6 +57,10 @@ Python + [disnake](https://disnake.dev/) + SQLite.
 
 Kurulum bitince **`start.bat`** ile botu başlatın. Komut satırından kurulumu test
 etmek ve hemen başlatmak için: `build.bat /run`.
+
+<p align="center">
+  <img src="assets/setup.gif" alt="build.bat kurulum çıktısı" width="720">
+</p>
 
 ### Elle kurulum
 
@@ -130,18 +138,57 @@ Tüm ayarlar ortam değişkenidir ve `core/config.py` içinde okunur. Tam liste:
 
 ---
 
+## Yedekleme
+
+Veritabanı WAL modunda çalışır; `main.sqlite` dosyasını kopyalamak tutarsız yedek üretir.
+Her iki script de SQLite'ın **online backup API**'sini kullanır, yani botu durdurmadan
+tutarlı bir anlık görüntü alır.
+
+**Windows**
+
+```powershell
+.\backup.ps1                  # backups\main-YYYYmmdd-HHMMSS.sqlite.gz
+.\backup.ps1 -KeepDays 30     # saklama süresi (varsayılan 14 gün)
+```
+
+**Linux / Docker host**
+
+```bash
+./automatic_backup.sh              # db/main.sqlite üzerinden
+./automatic_backup.sh --docker     # compose içindeki scrimlab servisi
+KEEP_DAYS=30 ./automatic_backup.sh
+```
+
+Geri yükleme (önce botu durdurun):
+
+```bash
+gunzip -c backups/main-20260101-040000.sqlite.gz > db/main.sqlite
+```
+
+Cron örneği:
+
+```cron
+0 4 * * * cd /opt/scrimlab && ./automatic_backup.sh >> backups/backup.log 2>&1
+```
+
+---
+
 ## Proje yapısı
 
 ```
-main.py              Bot girişi, veritabanı erişimi, cog yükleme
+main.py               Bot girişi, veritabanı erişimi, cog yükleme
 core/
-  config.py          Ortam değişkenlerinden okunan tüm ayarlar
-  match.py           Kuyruk, lobi, maç yaşam döngüsü
-  draft_view.py      Draft UI
-  champion_data.py   Şampiyon listesi
-  embeds.py          Ortak embed yardımcıları
-cogs/                Komutlar (admin, scrim, turnuva, market, ...)
-tests/               pytest testleri
+  config.py           Ortam değişkenlerinden okunan tüm ayarlar
+  match.py            Kuyruk, lobi, maç yaşam döngüsü
+  draft_view.py       Draft UI
+  champion_data.py    Şampiyon listesi
+  embeds.py           Ortak embed yardımcıları
+cogs/                 Komutlar (admin, scrim, turnuva, market, ...)
+assets/               Akış diyagramı ve kurulum GIF'i
+tests/                pytest testleri
+automatic_backup.sh   Linux/Docker yedeği
+backup.ps1            Windows yedeği
+build.bat / start.bat Windows kurulum ve başlatma
 ```
 
 ---

@@ -1,48 +1,69 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Consistent SQLite backup for ScrimLab.
+#
+# The database runs in WAL mode, so copying main.sqlite while the bot is
+# running can produce a torn backup. This uses SQLite's online backup API,
+# which takes a consistent snapshot without stopping the bot.
+#
+# Usage:
+#   ./automatic_backup.sh                 # host: db/main.sqlite
+#   ./automatic_backup.sh --docker        # compose: scrimlab service
+#   KEEP_DAYS=30 ./automatic_backup.sh    # keep 30 days (default 14)
+#
+# Output: backups/main-YYYYmmdd-HHMMSS.sqlite.gz
+set -euo pipefail
 
-# Set the file name
-echo "Enter the name of the tar file:"
-read file_name
+DB_PATH="${DB_PATH:-db/main.sqlite}"
+BACKUP_DIR="${BACKUP_DIR:-backups}"
+KEEP_DAYS="${KEEP_DAYS:-14}"
+SERVICE="${SERVICE:-scrimlab}"
+MODE="host"
 
-# Read the value of AWS_S3_PATH from the .env file
-s3_path=$(grep AWS_S3_PATH .env | cut -d '"' -f 2 | cut -d '=' -f 2)
+for arg in "$@"; do
+  case "$arg" in
+    --docker) MODE="docker" ;;
+    -h|--help) sed -n '2,14p' "$0"; exit 0 ;;
+    *) echo "Unknown argument: $arg" >&2; exit 2 ;;
+  esac
+done
 
-# Set the correct values for the source and destination directories based on the value of AWS_S3_PATH
-if [ "$s3_path" == "staging" ]; then
-  src_dir="/home/henry/s3-bucket/staging"
-  dst_dir="/home/henry/"
-  compose_dir="/home/henry/InHouseQueue"
-  volume_name="inhousequeue_inhouse-db"
-elif [ "$s3_path" == "production" ]; then
-  src_dir="/home/henry/s3-bucket/production"
-  dst_dir="/home/henry/"
-  compose_dir="/home/henry/InHouseQueue-live"
-  volume_name="inhousequeue-live_inhouse-db"
+mkdir -p "$BACKUP_DIR"
+STAMP="$(date +%Y%m%d-%H%M%S)"
+NAME="main-$STAMP.sqlite"
+OUT="$BACKUP_DIR/$NAME"
+
+if [ "$MODE" = "docker" ]; then
+  command -v docker >/dev/null 2>&1 || { echo "docker not found" >&2; exit 1; }
+  docker compose exec -T "$SERVICE" python -c "
+import sqlite3
+src = sqlite3.connect('/app/db/main.sqlite')
+dst = sqlite3.connect('/tmp/$NAME')
+src.backup(dst)
+dst.close()
+src.close()
+"
+  docker compose cp "$SERVICE:/tmp/$NAME" "$OUT"
+  docker compose exec -T "$SERVICE" rm -f "/tmp/$NAME"
 else
-  echo "Invalid value for AWS_S3_PATH. Must be either 'staging' or 'production'. Value found: $s3_path"
-  exit 1
+  PYTHON="${PYTHON:-python3}"
+  command -v "$PYTHON" >/dev/null 2>&1 || PYTHON=python
+  command -v "$PYTHON" >/dev/null 2>&1 || { echo "python not found" >&2; exit 1; }
+  [ -f "$DB_PATH" ] || { echo "database not found: $DB_PATH" >&2; exit 1; }
+  "$PYTHON" -c "
+import sqlite3, sys
+src = sqlite3.connect(sys.argv[1])
+dst = sqlite3.connect(sys.argv[2])
+src.backup(dst)
+dst.close()
+src.close()
+" "$DB_PATH" "$OUT"
 fi
 
-# Copy the tar file from the source directory to the destination directory
-cp $src_dir/$file_name $dst_dir || { echo "Error copying tar file. Exiting script."; exit 1; }
+gzip -f "$OUT"
+echo "Backup written: $OUT.gz"
 
-cd $dst_dir || { echo "Error copying tar file. Exiting script."; exit 1; }
-
-# Extract the tar file in the destination directory
-tar -xvzf $file_name -C $dst_dir || { echo "Error extracting tar file. Exiting script."; exit 1; }
-
-# Change to the correct compose directory
-cd $compose_dir || { echo "Error changing to compose directory. Exiting script."; exit 1; }
-
-# Run "docker-compose down" in the compose directory
-docker-compose down || { echo "Error running docker-compose down. Exiting script."; exit 1; }
-
-# Remove the volume
-docker volume rm $volume_name || { echo "Error removing volume. Exiting script."; exit 1; }
-
-# Run the cp command to copy main.sqlite to the volume
-docker run --rm -it -v $volume_name:/$volume_name -v $dst_dir/backup/inhouse-db-backup:/archive:ro alpine cp /archive/main.sqlite /$volume_name || { echo "Error running cp command. Exiting script."; exit 1; }
-
-## Remove the "backup" directory and tar file from the destination directory
-rm -r $dst_dir/backup || { echo "Error running rm command. Exiting script."; exit 1; }
-rm $dst_dir/$file_name || { echo "Error running rm command. Exiting script."; exit 1; }
+# Retention: delete snapshots older than KEEP_DAYS (0 disables).
+if [ "$KEEP_DAYS" -gt 0 ] 2>/dev/null; then
+  find "$BACKUP_DIR" -maxdepth 1 -type f -name 'main-*.sqlite.gz' \
+    -mtime +"$KEEP_DAYS" -print -delete
+fi

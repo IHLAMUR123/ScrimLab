@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="ScrimLab 5v5 akisi">
+  <rect width="1200" height="320" fill="#0d1117"/>
+
+  <text x="600" y="52" text-anchor="middle" fill="#e6edf3" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="700">ScrimLab — 5v5 akışı</text>
+  <text x="600" y="78" text-anchor="middle" fill="#8b949e" font-family="Segoe UI, Arial, sans-serif" font-size="14">tek komut, sıfır koordinasyon</text>
+
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <!-- 1 -->
+    <rect x="40" y="118" width="200" height="120" rx="12" fill="#161b22" stroke="#30363d"/>
+    <circle cx="70" cy="148" r="14" fill="#5865F2"/>
+    <text x="70" y="154" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">1</text>
+    <text x="94" y="154" fill="#e6edf3" font-size="17" font-weight="600">/queue</text>
+    <text x="60" y="188" fill="#8b949e" font-size="13">Rolünü seç</text>
+    <text x="60" y="210" fill="#8b949e" font-size="13">Kuyruğa gir</text>
+
+    <!-- 2 -->
+    <rect x="270" y="118" width="200" height="120" rx="12" fill="#161b22" stroke="#30363d"/>
+    <circle cx="300" cy="148" r="14" fill="#5865F2"/>
+    <text x="300" y="154" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">2</text>
+    <text x="324" y="154" fill="#e6edf3" font-size="17" font-weight="600">10/10</text>
+    <text x="290" y="188" fill="#8b949e" font-size="13">Takımlar kurulur</text>
+    <text x="290" y="210" fill="#8b949e" font-size="13">MMR dengelenir</text>
+
+    <!-- 3 -->
+    <rect x="500" y="118" width="200" height="120" rx="12" fill="#161b22" stroke="#30363d"/>
+    <circle cx="530" cy="148" r="14" fill="#5865F2"/>
+    <text x="530" y="154" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">3</text>
+    <text x="554" y="154" fill="#e6edf3" font-size="17" font-weight="600">Ses</text>
+    <text x="520" y="188" fill="#8b949e" font-size="13">Otomatik taşıma</text>
+    <text x="520" y="210" fill="#8b949e" font-size="13">AFK kontrolü</text>
+
+    <!-- 4 -->
+    <rect x="730" y="118" width="200" height="120" rx="12" fill="#161b22" stroke="#30363d"/>
+    <circle cx="760" cy="148" r="14" fill="#5865F2"/>
+    <text x="760" y="154" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">4</text>
+    <text x="784" y="154" fill="#e6edf3" font-size="17" font-weight="600">Maç</text>
+    <text x="750" y="188" fill="#8b949e" font-size="13">Draft + OP.GG</text>
+    <text x="750" y="210" fill="#8b949e" font-size="13">Lobi adı ve şifre</text>
+
+    <!-- 5 -->
+    <rect x="960" y="118" width="200" height="120" rx="12" fill="#161b22" stroke="#238636"/>
+    <circle cx="990" cy="148" r="14" fill="#238636"/>
+    <text x="990" y="154" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">5</text>
+    <text x="1014" y="154" fill="#e6edf3" font-size="17" font-weight="600">Sonuç</text>
+    <text x="980" y="188" fill="#8b949e" font-size="13">MMR + liderlik</text>
+    <text x="980" y="210" fill="#8b949e" font-size="13">Bakiye ödülü</text>
+  </g>
+
+  <g stroke="#30363d" stroke-width="2" fill="none">
+    <path d="M240 178 H262"/><path d="M268 178 l-7 -4 v8 z" fill="#30363d" stroke="none"/>
+    <path d="M470 178 H492"/><path d="M498 178 l-7 -4 v8 z" fill="#30363d" stroke="none"/>
+    <path d="M700 178 H722"/><path d="M728 178 l-7 -4 v8 z" fill="#30363d" stroke="none"/>
+    <path d="M930 178 H952"/><path d="M958 178 l-7 -4 v8 z" fill="#30363d" stroke="none"/>
+  </g>
+
+  <text x="600" y="286" text-anchor="middle" fill="#8b949e" font-family="Segoe UI, Arial, sans-serif" font-size="13">Python 3.12+ · disnake · SQLite (WAL) · Docker · MIT</text>
+</svg>

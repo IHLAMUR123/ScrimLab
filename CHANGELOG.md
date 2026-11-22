@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0
+
+### Eklendi
+- `automatic_backup.sh`: WAL-güvenli SQLite online yedek, saklama süresi ve `--docker` modu.
+- `backup.ps1`: aynı davranışın Windows sürümü (gzip, saklama süresi).
+- `assets/flow.svg`: 5v5 akış diyagramı.
+- `assets/setup.gif`: gerçek `build.bat` çıktısından üretilen kurulum animasyonu.
+- README: yedekleme bölümü, geri yükleme ve cron örneği.
+
+### Değişti
+- Sürüm 1.2.0.
+- `.gitignore`: `backups/`.
+
 ## 1.1.0
 
 Yayın temizliği. Davranış aynı, yapılandırma dışarı taşındı.
