@@ -3,6 +3,8 @@ from disnake.ext import commands
 from datetime import datetime
 import asyncio
 
+from core import config
+
 class ReportSystem(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -18,11 +20,7 @@ class ReportSystem(commands.Cog):
         sebep: str, 
         kanit: str
     ):
-        # Kanal belirleme
-        if self.bot.user.id == 1452380258933149958:
-            report_channel_id = 1454162669597622303
-        else:
-            report_channel_id = 1454162669597622303 # Kendi rapor kanal ID'niz
+        report_channel_id = config.REPORT_CHANNEL_ID
 
         report_channel = self.bot.get_channel(report_channel_id)
         

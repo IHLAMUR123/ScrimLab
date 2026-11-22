@@ -1,0 +1,8 @@
+services:
+  scrimlab:
+    build: .
+    container_name: scrimlab
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./db:/app/db

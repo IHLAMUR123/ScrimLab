@@ -1,6 +1,7 @@
 from disnake import Color, Embed, OptionChoice
 from disnake.ext.commands import Cog, Param, command, slash_command
 from Paginator import CreatePaginator
+from core import config
 from core.embeds import error
 
 class Leaderboard(Cog):
@@ -61,11 +62,11 @@ class Leaderboard(Cog):
                 
                 most_played_role_key = max(roles_players, key=lambda x: roles_players[x])
                 if not roles_players[most_played_role_key]:
-                    most_played_role = "<:fill:1066868480537800714>"
+                    most_played_role = config.FILL_EMOJI
                 else:
-                    most_played_role = self.bot.role_emojis.get(most_played_role_key, "<:fill:1066868480537800714>")
+                    most_played_role = self.bot.role_emojis.get(most_played_role_key, config.FILL_EMOJI)
             else:
-                most_played_role = "<:fill:1066868480537800714>"
+                most_played_role = config.FILL_EMOJI
 
             p_data = await self.bot.fetchrow("SELECT * FROM points WHERE user_id = ? and guild_id = ? and game = ?", data[1], ctx.guild.id, game)
             wins, losses = (p_data[2], p_data[3]) if p_data else (0, 0)

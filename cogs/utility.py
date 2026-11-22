@@ -3,6 +3,7 @@ from disnake import (
     Embed, Color, ButtonStyle, TextInputStyle,
     ui, Member, utils
 )
+from core import config
 from core.embeds import error, success
 import disnake
 
@@ -144,8 +145,8 @@ class RankSelectMenu(ui.StringSelect):
         member: Member = inter.author
         guild = inter.guild
         
-        rol_silinecek_id = 1453407218442702941  # Yeni Katıldı
-        rol_verilecek_id = 1453335299840020511  # Kayıtlı Üye
+        rol_silinecek_id = config.NEW_MEMBER_ROLE_ID  # Yeni Katıldı
+        rol_verilecek_id = config.MEMBER_ROLE_ID  # Kayıtlı Üye
         
         eklenecek_roller = []
         
@@ -182,7 +183,7 @@ class RankSelectMenu(ui.StringSelect):
                 f"**Oyun İçi Nick:** `{self.nick}`\n"
                 f"**Rol:** `{self.rol}`\n"
                 f"**Rank:** `{rank}`\n\n"
-                f"<#1454458642622451824> Kanalından istediğin rolü seçip 5v5'e katılabilirsin.\n"
+                f"<#{config.QUEUE_CHANNEL_ID}> Kanalından istediğin rolü seçip 5v5'e katılabilirsin.\n"
                 f"Hesabın başarıyla kaydedildi — iyi oyunlar!"
             ),
             color=Color.green()
@@ -207,17 +208,17 @@ class RankSelectMenu(ui.StringSelect):
             dm_embed.add_field(
                 name="📋 Bilgilendirme",
                 value=(
-                    """🎮  **SCRİMLAB NEDİR?**
+                    f"""🎮  **SCRİMLAB NEDİR?**
 Scrimlab, *League of Legends’ta* özel lobiler kurup **5’e 5 — turnuva draftı formatında**, *scrim / esports / flex* tadında maçlar oynamamızı sağlayan bir sistemdir. Discord botumuz bu sistemi hem rekabetçı kılıyor hemde uygulanışını kolaylaştırıyor
 
 🏆 **KAYIT OLUP MAÇ ARAMAK**
 -  Kayıt kanalından kayıt ol butonu ile nick#etiket rol rank seçerek otomatik şekilde kayıt olup
--  Sıra (<#1454458642622451824>) Kanalından hızlıca rol seçip maçlara katılabilirsin
--  Maç saatleri hakkında bilgi almak için <#1456276066967752705> kanalından maç bilgi rolü alabilirsin.
+-  Sıra (<#{config.QUEUE_CHANNEL_ID}>) Kanalından hızlıca rol seçip maçlara katılabilirsin
+-  Maç saatleri hakkında bilgi almak için <#{config.MATCH_INFO_CHANNEL_ID}> kanalından maç bilgi rolü alabilirsin.
 
 ────────────────────────
 ‼️ **BUG / İSTEK / ÖNERİ**  
-- Bildirmek için **<#1453371166147477575>** 
+- Bildirmek için **<#{config.SUPPORT_CHANNEL_ID}>** 
 ────────────────────────"""
                 ),
                 inline=False

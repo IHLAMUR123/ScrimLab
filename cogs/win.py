@@ -3,6 +3,7 @@ from disnake import Color, Embed, ui, ButtonStyle
 from disnake.ext.commands import Cog, command, slash_command
 from trueskill import Rating, backends, rate
 
+from core import config
 from core.embeds import error, success
 
 class WinButtons(ui.View):
@@ -509,7 +510,7 @@ class Win(Cog):
         if not bypass:
             embed1 = Embed(
                 title="Sonuçlar Yanlış Mı İşaretlendi ?", 
-                description="Böyle Bir Durumda <#1453371166147477575> Destek Talebi Açınız Yeni Bir Maça Girmeyin !", 
+                description=f"Böyle Bir Durumda <#{config.SUPPORT_CHANNEL_ID}> Destek Talebi Açınız Yeni Bir Maça Girmeyin !", 
                 color=Color.yellow()
             )
             embed2 = Embed(

@@ -1,3 +1,4 @@
+from core import config
 from core.embeds import error, success
 from disnake import Game
 from disnake.ext.commands import Cog, group, slash_command
@@ -6,7 +7,7 @@ from disnake.ext.commands import Cog, group, slash_command
 class Dev(Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
-        self.devs = [655498457083150342]
+        self.devs = list(config.DEV_USER_IDS)
 
     async def cog_check(self, ctx) -> bool:
         if not ctx.author.id in self.devs:
@@ -24,7 +25,7 @@ class Dev(Cog):
     async def dev(self, ctx):
         pass
 
-    @slash_command(name="dev", guild_ids=[1458071278689845283])
+    @slash_command(name="dev", guild_ids=config.sync_guild_ids())
     async def dev_slash(self, ctx):
         pass
 

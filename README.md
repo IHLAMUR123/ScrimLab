@@ -1,51 +1,161 @@
-# 🏆 ScrimLab - League of Legends In-House Bot
+# 🏆 ScrimLab — League of Legends In-House Bot
 
-ScrimLab, League of Legends toplulukları için geliştirilmiş; scrim otomasyonu, ekonomi sistemi ve gelişmiş takım yönetim sistemine sahip profesyonel bir Discord botudur. 100% Açık Kaynaklıdır.
+League of Legends toplulukları için 5v5 scrim otomasyonu, ekonomi sistemi ve turnuva yönetimi.
+Python + [disnake](https://disnake.dev/) + SQLite.
 
----
-
-## Özellikler & Komutlar
-
-### 🎮 Oyun & Scrim Otomasyonu
-- **⚔️ 5v5 Otomasyonu:** Otomatik lobi ismi, şifre ve **Draft** linkleri oluşturma.
-- **�️ Otomatik Taşıma:** Maç başladığında oyuncuları kendi takım ses kanallarına otomatik aktarma.
-- **📊 OP.GG Entegrasyonu:** Her iki takımın OP.GG linklerini otomatik olarak paylaşma.
-- **🥇 Takım Sistemi:** Kendi takımınızı kurun ve istatistiklerinizi takip edin.
-
-### � Ekonomi & Market
-- **🎲 /duello:** Diğer oyuncularla bakiye karşılığında zar atma yarışı.
-- **🛒 /market:** Kazandığınız bakiyelerle özel roller alma veya oluşturma.
-- **👛 /cüzdan:** Mevcut bakiyenizi anlık görüntüleme.
-
-### 👤 Sosyal & Profil
-- **�️ /profil:** Kendinizin veya rakiplerinizin tüm istatistiklerini görüntüleme.
-- **📢 /report:** Şikayetlerinizi kanıtlarıyla birlikte anonim olarak iletme.
-
-### 🛡️ Güvenlik & Sistem
-- **🔄 Update Checker:** Bot her başladığında GitHub üzerinden sürüm kontrolü yapar.
-
-Ve Dahası...
+> **Durum:** Bu bot, kapatılan bir Discord sunucusu (ScrimLab TR) için yazıldı ve artık aktif
+> geliştirilmiyor. Referans uygulama olarak MIT lisansıyla yayınlanmıştır: kendi sunucunuzda
+> çalıştırabilir, fork'layabilir ve değiştirebilirsiniz.
 
 ---
 
-## 🛠️ Kurulum Rehberi
+## Özellikler
 
-1. **Dosyaları İndirin:** `git clone https://github.com/IHLAMUR123/ScrimLab.git`
-2. **Kütüphaneleri Kurun:** `pip install -r requirements.txt`
-3. **Yapılandırma:** `.env` dosyasına `TOKEN`, `GUILD_ID` ve `TOP_GG_TOKEN` bilgilerinizi ekleyin.
-4. **Çalıştır:** `python3 main.py`
+### Oyun & scrim
+- **5v5 kuyruk**: rol seçimi, MMR, duo desteği, yedek oyuncu havuzu.
+- **Otomatik lobi**: lobi adı, şifre ve draft linki; maç başında oyuncuları takım ses kanallarına taşıma.
+- **Draft**: turnuva formatında şampiyon ban/pick ekranı.
+- **OP.GG**: iki takımın OP.GG linkleri otomatik paylaşılır.
+- **Takım sistemi**: takım kurma, kadro ve istatistik takibi.
+- **Turnuva**: bracket üretimi ve maç yönetimi.
+
+### Ekonomi & sosyal
+- `/cüzdan`, `/duello`, `/market` (bakiye ile rol satın alma).
+- `/profil`, liderlik tablosu, MVP/MMR sıralaması.
+- `/report`: anonim şikayet + yetkili cevap sistemi (`!cevap <user_id> <mesaj>`).
+
+### Moderasyon
+- Süreli uyarı (`/uyariver`, `/uyarikaldir`), otomatik timeout ve isim işaretleme.
+- Hata günlüğü, güncelleme kontrolü.
 
 ---
 
-## 💡 Önemli Notlar
-- **Erişim:** Türkiye'den kullanımda Discord erişim engeli kaynaklı sorun yaşamamak için VPN veya yurt dışı lokasyonlu VDS önerilir.
-- **Bütünlük:** `core/` dizinindeki dosyaların (özellikle `__credits__.py`) değiştirilmesi botun çalışmasını durdurur.
+## Gereksinimler
+
+- Python **3.12+**
+- Bir Discord bot token'ı
+- Discord Developer Portal'da açık **Message Content** ve **Server Members** intent'leri
+- `Move Members`, `Manage Roles`, `Manage Channels` izinleri
 
 ---
 
-## 👨‍💻 Geliştirici
-- **Author:** [IHLAMUR123](https://github.com/IHLAMUR123)
-- **Original Repo:** [CarlSimmy](https://github.com/CarlSimmy/InhouseLeague)
+## Kurulum
+
+```bash
+git clone https://github.com/IHLAMUR123/ScrimLab.git
+cd ScrimLab
+
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Linux/macOS
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+# Windows
+copy .env.example .env
+# Linux/macOS
+cp .env.example .env
+```
+
+`.env` dosyasını açıp en az `TOKEN` değerini doldurun. Diğer ID'ler varsayılan olarak
+ScrimLab TR'nin değerlerini taşır; kendi sunucunuz için değiştirin.
+
+```bash
+python main.py
+```
 
 ---
-*İyi Scrim'ler!* 🎮
+
+## Docker
+
+```bash
+cp .env.example .env
+docker compose up -d --build
+```
+
+Veritabanı `./db` dizinine bağlanır, container yeniden oluşturulsa da korunur.
+
+---
+
+## Yapılandırma
+
+Tüm ayarlar ortam değişkenidir ve `core/config.py` içinde okunur. Tam liste: [`.env.example`](.env.example).
+
+| Değişken | Varsayılan | Açıklama |
+|---|---|---|
+| `TOKEN` | — | **Zorunlu.** Bot token'ı |
+| `TOP_GG_TOKEN` | boş | top.gg sunucu sayısı gönderimi (opsiyonel) |
+| `GUILD_ID` | 1458071278689845283 | Ana sunucu |
+| `DEV_GUILD_ID` | `GUILD_ID` | Slash komutlarının senkronize edileceği sunucu. `0` = global |
+| `DEV_USER_IDS` | `655498457083150342` | `/dev` kullanabilecek kullanıcılar (virgüllü) |
+| `QUEUE_CHANNEL_ID` | … | 5v5 kuyruk kanalı |
+| `BALANCE_LOG_CHANNEL_ID` | … | Bakiye/market log kanalı |
+| `REPORT_CHANNEL_ID` | … | Anonim şikayet kanalı |
+| `SUPPORT_CHANNEL_ID` | … | Destek/ticket kanalı |
+| `MATCH_INFO_CHANNEL_ID` | … | Maç bilgi rolü kanalı |
+| `ERROR_LOG_CHANNEL_ID` | … | Hata logu kanalı |
+| `NEW_MEMBER_ROLE_ID` | … | Kayıt öncesi rol |
+| `MEMBER_ROLE_ID` | … | Kayıtlı üye rolü |
+| `WARNING_ROLE_ID` | `0` | Uyarı rolü. `0` = devre dışı |
+| `EMOJI_TOP` … `EMOJI_SUPPORT` | … | Sıra emojileri |
+| `PREFIX` | `!` | Prefix komut işareti |
+| `DB_PATH` | `db/main.sqlite` | SQLite yolu |
+
+### Önemli notlar
+
+- **Emojiler:** Varsayılan emoji ID'leri ScrimLab TR sunucusuna aittir. Kendi sunucunuzda
+  görünmezlerse `.env` içinde unicode (ör. `EMOJI_TOP=🗡️`) olarak değiştirin.
+- **Uyarı rolü:** Eski sürümde buraya yanlışlıkla bir kanal ID'si yazılmıştı; artık varsayılan
+  `0` ve devre dışı. Uyarı verirken rol eklenmesini istiyorsanız gerçek rol ID'sini girin.
+- **Komut senkronizasyonu:** `DEV_GUILD_ID=0` yaparsanız komutlar global yayılır (bir saate kadar
+  gecikebilir). Geliştirme sırasında sunucuya sabitlemek daha hızlıdır.
+- `.env` dosyasını asla commit etmeyin; `.gitignore` ve `.dockerignore` bunu engeller.
+
+---
+
+## Proje yapısı
+
+```
+main.py              Bot girişi, veritabanı erişimi, cog yükleme
+core/
+  config.py          Ortam değişkenlerinden okunan tüm ayarlar
+  match.py           Kuyruk, lobi, maç yaşam döngüsü
+  draft_view.py      Draft UI
+  champion_data.py   Şampiyon listesi
+  embeds.py          Ortak embed yardımcıları
+cogs/                Komutlar (admin, scrim, turnuva, market, ...)
+tests/               pytest testleri
+```
+
+---
+
+## Test
+
+```bash
+pip install pytest
+pytest -q
+```
+
+Mevcut testler yapılandırma katmanını kapsar ve bot token'ı gerektirmez. Botun kendisi için
+entegrasyon testi yoktur; Discord'a bağlanmadan çalıştırılamaz.
+
+---
+
+## Lisans
+
+[MIT](LICENSE) © 2026 IHLAMUR
+
+---
+
+## Krediler
+
+- **IHLAMUR** — geliştirici.
+- [CarlSimmy/InhouseLeague](https://github.com/CarlSimmy/InhouseLeague) — LoL in-house botu
+  konseptinin ilham kaynağı. JavaScript ile yazılmış ve lisanssız bir projedir; bu depoda
+  o koddan kopyalanmış hiçbir satır yoktur.
+- [disnake](https://github.com/DisnakeDev/disnake), [aiosqlite](https://github.com/omnilib/aiosqlite),
+  [Pillow](https://python-pillow.org/), [trueskill](https://trueskill.org/).
+
+Bu proje Riot Games veya League of Legends ile bağlantılı değildir; tüm markalar sahiplerine aittir.

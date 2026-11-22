@@ -1,0 +1,1 @@
+"""ScrimLab cogs package."""

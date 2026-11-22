@@ -17,6 +17,7 @@ import disnake
 from disnake.ext import tasks
 from trueskill import Rating, quality
 
+from core import config
 from core.buttons import ConfirmationButtons
 from core.embeds import error, success
 from core.selectmenus import SelectMenuDeploy
@@ -1668,7 +1669,7 @@ class ReadyButton(ui.Button):
                         description=f"Kazananı onaylamak için, `!win` veya `/win` yazınız.\n "
                                     f"**6** oy ve fazlası geçerlidir.\n"
                                     f"Sadece Lobidekilerin Oyu Geçerlidir.\n \n"
-                                    f"Eğer Kazanan Yanlış İşaretlenirse <#1453371166147477575> kanalı üzerinden İletişime geçin.",
+                                    f"Eğer Kazanan Yanlış İşaretlenirse <#{config.SUPPORT_CHANNEL_ID}> kanalı üzerinden İletişime geçin.",
                         color=Color.yellow(),
                     )
                   )
@@ -1782,11 +1783,11 @@ class Queue(ui.View):
         
         # Rol emojileri ve sıralaması
         role_info = {
-            "top": {"emoji": "<:Top:1454081617382477908>", "display": "Top", "icon": "🗡️"},
-            "jungle": {"emoji": "<:Jungle:1454081696327667836>", "display": "Jungle", "icon": "🌲"},
-            "mid": {"emoji": "<:Mid:1454081643374448836>", "display": "Mid", "icon": "⚡"},
-            "adc": {"emoji": "<:ADC:1454081581445812244>", "display": "ADC", "icon": "🏹"},
-            "support": {"emoji": "<:Support:1454081735087231048>", "display": "Support", "icon": "🛡️"}
+            "top": {"emoji": config.ROLE_EMOJIS["top"], "display": "Top", "icon": "🗡️"},
+            "jungle": {"emoji": config.ROLE_EMOJIS["jungle"], "display": "Jungle", "icon": "🌲"},
+            "mid": {"emoji": config.ROLE_EMOJIS["mid"], "display": "Mid", "icon": "⚡"},
+            "adc": {"emoji": config.ROLE_EMOJIS["adc"], "display": "ADC", "icon": "🏹"},
+            "support": {"emoji": config.ROLE_EMOJIS["support"], "display": "Support", "icon": "🛡️"}
         }
         role_order = ["top", "jungle", "mid", "adc", "support"]
         
@@ -1961,7 +1962,7 @@ class Queue(ui.View):
 
             dm_embed = disnake.Embed(
                 title="**Maç Bulundu!**",
-                description=f"**{inter.guild.name}** sunucusundaki maçın hazır. <#1454458642622451824> kanalından hazır verebilirsin 5 dakika süren var iyi eğlenceler...",
+                description=f"**{inter.guild.name}** sunucusundaki maçın hazır. <#{config.QUEUE_CHANNEL_ID}> kanalından hazır verebilirsin 5 dakika süren var iyi eğlenceler...",
                 color=disnake.Color.green()
             )
             

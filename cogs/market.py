@@ -3,6 +3,8 @@ from disnake.ext import commands
 from disnake import Embed, Color, SelectOption
 from datetime import datetime
 
+from core import config
+
 class CustomRoleModal(disnake.ui.Modal):
     def __init__(self, bot, user, price):
         self.bot = bot
@@ -196,7 +198,7 @@ class MarketSelect(disnake.ui.Select):
             await inter.followup.send(embed=embed, ephemeral=True)
             
             # Log kanalına bildir (varsa)
-            log_channel_id = 1454210251887874128  # Bakiye log kanalı
+            log_channel_id = config.BALANCE_LOG_CHANNEL_ID
             log_channel = self.bot.get_channel(log_channel_id)
             if log_channel:
                 log_embed = Embed(

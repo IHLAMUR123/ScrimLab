@@ -3,11 +3,13 @@ from disnake.ext import commands
 import re
 from datetime import datetime
 
+from core import config
+
 class BakiyeSistemi(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.win_reward = 50
-        self.log_channel_id = 1454210251887874128 
+        self.log_channel_id = config.BALANCE_LOG_CHANNEL_ID 
 
     async def send_bakiye_log(self, title, description, color=disnake.Color.blue()):
         log_channel = self.bot.get_channel(self.log_channel_id)

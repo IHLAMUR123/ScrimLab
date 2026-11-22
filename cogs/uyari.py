@@ -3,6 +3,8 @@ from disnake.ext import commands
 from datetime import datetime, timedelta
 import asyncio
 
+from core import config
+
 # Global hafıza (Bot kapanınca sıfırlanır, DB'ye bağlamak istersen belirtebilirsin)
 active_warnings = {} # {user_id: bitis_zamani}
 original_nicks = {}  # {user_id: eski_isim}
@@ -10,8 +12,7 @@ original_nicks = {}  # {user_id: eski_isim}
 class UyariSistemi(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        # SENİN REPOR KANAL ID'Nİ ROL ID OLARAK VARSAYDIM, DEĞİŞTİRMEYİ UNUTMA ❗
-        self.uyari_rol_id = 1454162669597622303 
+        self.uyari_rol_id = config.WARNING_ROLE_ID
 
     # --- TİMEOUT MODAL (FORM) SINIFI ---
     class TimeoutModal(disnake.ui.Modal):

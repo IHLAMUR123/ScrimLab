@@ -1,7 +1,7 @@
 import traceback
 from io import StringIO
 
-from core import embeds
+from core import config, embeds
 from disnake import Color, Embed, File, Game
 from disnake.ext import commands, tasks
 from disnake.ext.commands import Cog
@@ -325,14 +325,7 @@ class Events(Cog):
         else:
             await self.bot.wait_until_ready()
 
-            if self.bot.user.id == 1452380258933149958:  # Testing bot ID
-                channel = self.bot.get_channel(
-                    1452690176760479755
-                )  # Testing Server Channel
-            else:
-                channel = self.bot.get_channel(
-                    1452690176760479755
-                )  # Server Support Channel
+            channel = self.bot.get_channel(config.ERROR_LOG_CHANNEL_ID)
 
             if isinstance(ctx, commands.Context):
                 command = ctx.command
