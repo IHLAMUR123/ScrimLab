@@ -8,6 +8,7 @@
 - `assets/flow.svg`: 5v5 akış diyagramı.
 - `assets/setup.gif`: gerçek `build.bat` çıktısından üretilen kurulum animasyonu.
 - README: yedekleme bölümü, geri yükleme ve cron örneği.
+- README: katlanabilir İngilizce özet (uluslararası görünürlük için).
 
 ### Değişti
 - Sürüm 1.2.0.

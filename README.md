@@ -7,6 +7,26 @@ Python + [disnake](https://disnake.dev/) + SQLite.
 > geliştirilmiyor. Referans uygulama olarak MIT lisansıyla yayınlanmıştır: kendi sunucunuzda
 > çalıştırabilir, fork'layabilir ve değiştirebilirsiniz.
 
+<details>
+<summary><b>🇬🇧 English summary</b></summary>
+
+**ScrimLab** is an open-source League of Legends 5v5 in-house Discord bot, built for a Turkish
+community and published as a reference implementation.
+
+- `/queue` with role selection, MMR balancing and substitute players
+- Automatic team creation, temporary voice channels and player moves
+- Tournament draft, OP.GG links, team and tournament management
+- Economy (`/cüzdan`, `/duello`, `/market`), profiles and leaderboards
+- Moderation: timed warnings, timeouts and an anonymous `/report` flow
+- SQLite in WAL mode, Docker support and WAL-safe backup scripts
+
+**Stack:** Python 3.12+ · disnake · aiosqlite · Pillow · MIT
+**Quick start:** `build.bat` then `start.bat` on Windows, or `docker compose up -d --build`
+**Status:** no longer actively maintained. The code is published as-is for reference and forking;
+no bot token, database or user data is included.
+
+</details>
+
 <p align="center">
   <img src="assets/flow.svg" alt="ScrimLab 5v5 akışı: kuyruk, takımlar, ses, maç, sonuç" width="100%">
 </p>
