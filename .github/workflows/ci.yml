@@ -1,8 +1,9 @@
 name: CI
 
+# Manual trigger for now. Re-enable the push / pull_request triggers below
+# once GitHub Actions is available for this account again.
 on:
-  push:
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
