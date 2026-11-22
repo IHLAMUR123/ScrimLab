@@ -234,9 +234,6 @@ entegrasyon testi yoktur; Discord'a bağlanmadan çalıştırılamaz.
 ## Krediler
 
 - **IHLAMUR** — geliştirici.
-- [CarlSimmy/InhouseLeague](https://github.com/CarlSimmy/InhouseLeague) — LoL in-house botu
-  konseptinin ilham kaynağı. JavaScript ile yazılmış ve lisanssız bir projedir; bu depoda
-  o koddan kopyalanmış hiçbir satır yoktur.
 - [disnake](https://github.com/DisnakeDev/disnake), [aiosqlite](https://github.com/omnilib/aiosqlite),
   [Pillow](https://python-pillow.org/), [trueskill](https://trueskill.org/).
 
